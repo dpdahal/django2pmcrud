@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRUD</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+        crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="row mt-3 mb-5">
+            <div class="col-md-12">
+                <h1>Update Data</h1>
+            </div>
+            <div class="col-md-12">
+                {% if messages %}
+                    {% for message in messages %}
+                    <div class="alert alert-success">{{message}}</div>
+                        {% endfor %}
+                
+                {% endif %}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <form action="" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="form-group mb-3">
+                        <label for="name">Name</label>
+                        <input type="text" name="name" value="{{studentData.name}}" id="name" required class="form-control">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="email">Email</label>
+                        <input type="email" name="email" value="{{studentData.email}}" readonly id="email" required class="form-control">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="gender">Gender</label> <br>
+                        <label><input type="radio" {% if studentData.gender == 'male' %} checked {% endif %} name="gender" value="male">Male</label>
+                        <label><input type="radio" name="gender" {% if studentData.gender == 'female' %} checked {% endif %} value="female">Female</label>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="language">Language:</label> <br>
+                        <label><input type="checkbox" name="language"
+                            {% if 'nepali' in  studentData.language_list %}
+                            checked
+                            {% endif %}
+                            value="nepali">Nepali</label>
+                        <label><input type="checkbox" name="language"
+                            {% if 'english' in  studentData.language_list %}
+                            checked
+                            {% endif %}
+                            value="english">English</label>
+                        <label><input type="checkbox" name="language" 
+                            {% if 'hindi' in  studentData.language_list %}
+                            checked
+                            {% endif %}
+                            value="hindi">Hindi</label>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="country">Country</label>
+                        <select name="country" id="country" required class="form-control">
+                            <option value="">----Select Country----</option>
+                            <option value="nepal" 
+                            {% if studentData.country == 'nepal' %}
+                            selected
+                            {% endif %}
+                            >Nepal</option>
+                            <option value="india"
+                            {% if studentData.country == 'india' %}
+                            selected
+                            {% endif %}
+                            >India</option>
+                            <option value="china"
+                            {% if studentData.country == 'china' %}
+                            selected
+                            {% endif %}
+                            >China</option>
+                        </select>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="image">Image</label>
+                        <input type="file" name="image" id="image" class="form-control">
+                        <hr>
+                        {% if studentData.image %}
+                        <img src="{{studentData.image.url}}" alt="" width="100">
+                        {% endif %}
+                    </div>
+                    <div class="form-group mb-3">
+                        <button class="btn btn-success">Update Record</button>
+                    </div>
+                </form>
+            </div>
+            <hr>
+            <a href="{% url 'index' %}" class="btn btn-primary">Back</a>
+            
+        </div>
+    </div>
+
+</body>
+
+</html>
